@@ -10,6 +10,7 @@ const SignUp = () => {
   return (
     <div>
       <form className={classes.container}>
+        <h2>Kindly Fill The Form</h2>
         <TextField
           id="outlined-name"
           label="Name"
