@@ -92,8 +92,8 @@ export default function SearchAppBar({ handleOpen }) {
               onClose={handleClose}
             >
               {/* <MenuItem onClick={handleClose}>Register</MenuItem> */}
-              <MenuItem onClick={handleOpen}>Register</MenuItem>
-              <MenuItem onClick={handleOpen}> Login</MenuItem>
+              <MenuItem onClick={() => handleOpen()(true)}>Register</MenuItem>
+              <MenuItem onClick={() => handleOpen()(false)}> Login</MenuItem>
             </Menu>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
