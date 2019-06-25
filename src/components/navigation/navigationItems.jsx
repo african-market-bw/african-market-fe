@@ -5,7 +5,7 @@ import {
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 const useStyles = makeStyles(theme => ({
@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar({ handleOpen }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -91,16 +91,9 @@ export default function SearchAppBar() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Register</MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Link
-                  to="/login"
-                  style={{ textDecoration: 'none', color: 'black' }}
-                >
-               Login
-                </Link>
-
-              </MenuItem>
+              {/* <MenuItem onClick={handleClose}>Register</MenuItem> */}
+              <MenuItem onClick={handleOpen}>Register</MenuItem>
+              <MenuItem onClick={handleOpen}> Login</MenuItem>
             </Menu>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
@@ -124,3 +117,7 @@ export default function SearchAppBar() {
     </div>
   );
 }
+
+SearchAppBar.propTypes = {
+  handleOpen: PropTypes.func.isRequired,
+};
