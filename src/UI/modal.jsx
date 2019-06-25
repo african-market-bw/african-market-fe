@@ -50,6 +50,7 @@ export default function SimpleModal({ open, handleClose, children }) {
 }
 
 SimpleModal.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   children: PropTypes.any.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
