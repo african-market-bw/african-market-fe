@@ -1,8 +1,8 @@
 import { LOGIN } from './store/actions/actions';
 
 const customMiddleware = () => next => (action) => {
-  if (LOGIN) {
-    localStorage.setItem('userToken', action.payload);
+  if (action.type === LOGIN) {
+    localStorage.setItem('userToken', action.payload.token);
   }
   next(action);
 };
