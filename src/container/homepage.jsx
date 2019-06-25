@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navigation from '../components/navigation/navigationItems';
 import Modal from '../UI/modal';
+import Form from '../components/forms/signup';
 
 class HomePage extends Component {
   constructor(props) {
@@ -33,7 +34,9 @@ class HomePage extends Component {
           open={open}
           handleClose={this.handleClose}
           handleOpen={this.handleOpen}
-        />
+        >
+          <Form />
+        </Modal>
       </div>
     );
   }
