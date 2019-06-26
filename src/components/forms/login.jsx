@@ -3,20 +3,18 @@ import { connect } from 'react-redux';
 import {
   TextField, Button,
 } from '@material-ui/core';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import styled from 'styled-components';
 import { postLogin } from '../../store/actions/users';
 import useStyles from './styles';
-import Error from './error';
 import Spinner from '../../UI/spinner';
+
 
 const Login = (props) => {
   const classes = useStyles();
   const username = React.createRef();
   const password = React.createRef();
-
-  const clearError = () => styled(Error)`display: none;`;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -31,28 +29,15 @@ const Login = (props) => {
   const { error } = props;
   const { loading } = props;
   if (login) return <Redirect to="/users" />;
+  if (error) {
+    toast.error(error);
+  }
+
 
   return (
     <div>
       {loading && <Spinner />}
-      {error && !login
-        && (
-        <Error>
-          {' '}
-          <span
-            onClick={clearError}
-            onKeyPress={clearError}
-            role="button"
-            tabIndex="0"
-          >
-X
-
-          </span>
-          <p>{error}</p>
-          {' '}
-        </Error>
-        )
-      }
+      { error && !login ? true : null}
       <form className={classes.container} onSubmit={e => onSubmitHandler(e)}>
         <h2> Kindly Input Your Login Details</h2>
         <TextField
@@ -87,9 +72,9 @@ X
 };
 
 const mapStateToProps = state => ({
-  login: state.login,
-  error: state.error,
-  loading: state.loading,
+  login: state.user.login,
+  error: state.user.errorLogin,
+  loading: state.user.loading,
 });
 
 export default connect(mapStateToProps, { postLogin })(Login);

@@ -3,12 +3,11 @@ import {
   TextField, Button,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import styled from 'styled-components';
 import { postSignUp, errorLogin } from '../../store/actions/users';
 import useStyles from './styles';
-import Error from './error';
 import Spinner from '../../UI/spinner';
 
 const SignUp = (props) => {
@@ -34,32 +33,16 @@ const SignUp = (props) => {
       props.history.push('/users');
     }
   };
-  const clearError = () => styled(Error)`display: none;`;
-
   const { login } = props;
   const { error } = props;
   const { loading } = props;
+  if (error) {
+    toast.error(error);
+  }
   return (
     <div>
       {loading && <Spinner />}
-      {error && !login
-        && (
-        <Error>
-          {' '}
-          <span
-            onClick={clearError}
-            onKeyPress={clearError}
-            role="button"
-            tabIndex="0"
-          >
-X
-
-          </span>
-          <p>{error}</p>
-          {' '}
-        </Error>
-        )
-      }
+      {error && !login ? true : null}
       <form className={classes.container}>
         <h2>Kindly Fill The Form</h2>
         <TextField
@@ -114,9 +97,9 @@ X
 };
 
 const mapStateToProps = state => ({
-  login: state.login,
-  error: state.error,
-  loading: state.loading,
+  login: state.user.login,
+  error: state.user.errorSignUp,
+  loading: state.user.loading,
 });
 
 export default connect(mapStateToProps, { postSignUp, errorLogin })(withRouter(SignUp));
