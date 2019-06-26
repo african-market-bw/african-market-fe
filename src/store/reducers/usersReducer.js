@@ -4,7 +4,8 @@ const initialState = {
   user: [],
   login: false,
   loading: false,
-  error: '',
+  errorLogin: '',
+  errorSignUp: '',
   message: '',
 };
 
@@ -14,7 +15,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         login: true,
-        error: '',
+        errorLogin: '',
         user: action.payload,
         message: action.message,
       };
@@ -32,6 +33,18 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         message: action.payload,
+        errorSignUp: '',
+        login: true,
+      };
+    case actions.ERROR_LOGIN:
+      return {
+        ...state,
+        errorLogin: action.payload,
+      };
+    case actions.ERROR_SIGNUP:
+      return {
+        ...state,
+        errorSignUp: action.payload,
       };
     default:
       return state;

@@ -1,20 +1,23 @@
 import styled from 'styled-components';
 
 const Error = styled.div`
-  display: flex;
+  display: ${props => (props.primary ? 'none' : 'flex')};
   flex-direction: column;
   align-items: flex-end;
-  border: 1px solid salmon;
+  justify-content: center;
+  border: 1px solid #ddd;
   color: red;
   span{
     cursor: pointer;
+    color: #ddd;
     &:hover{
       border-radius: 50%;
-      background-color: salmon;
+      background-color: lightblue;
     }
   }
   p {
     margin-right: 5rem;
+    text-align: center;
   }
 `;
 

@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import HomePage from './container/homepage';
 import UserPage from './components/users/userProfile';
 import PrivateRoute from './HOC/privateRoute';
@@ -13,6 +14,7 @@ function App() {
       <Router>
         <Route exact path="/" component={HomePage} />
         <PrivateRoute exact path="/users" component={UserPage} />
+        <ToastContainer />
       </Router>
     </div>
   );

@@ -10,8 +10,13 @@ export const successLogin = user => message => ({
 });
 
 export const errorLogin = error => ({
-  type: actions.ERROR,
+  type: actions.ERROR_LOGIN,
   payload: error,
+});
+
+const errorSignUp = err => ({
+  type: actions.ERROR_SIGNUP,
+  payload: err,
 });
 
 const loading = bool => ({
@@ -41,11 +46,13 @@ export const postLogin = data => async (dispatch) => {
 
 export const postSignUp = data => async (dispatch) => {
   dispatch(loading(true));
-  dispatch(errorLogin(''));
+  dispatch(errorSignUp(''));
   try {
     const response = await axois.post('/auth/register', data);
     dispatch(signUp(response.data));
   } catch (error) {
-    dispatch(errorLogin(error.message));
+    dispatch(errorSignUp(error.message));
+  } finally {
+    dispatch(loading(true));
   }
 };
