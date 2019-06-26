@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { postLogin } from '../../store/actions/users';
 import useStyles from './styles';
 import Error from './error';
+import Spinner from '../../UI/spinner';
 
 const Login = (props) => {
   const classes = useStyles();
@@ -28,10 +29,12 @@ const Login = (props) => {
   };
   const { login } = props;
   const { error } = props;
+  const { loading } = props;
   if (login) return <Redirect to="/users" />;
 
   return (
     <div>
+      {loading && <Spinner />}
       {error && !login
         && (
         <Error>
@@ -86,6 +89,7 @@ X
 const mapStateToProps = state => ({
   login: state.login,
   error: state.error,
+  loading: state.loading,
 });
 
 export default connect(mapStateToProps, { postLogin })(Login);
@@ -93,5 +97,6 @@ export default connect(mapStateToProps, { postLogin })(Login);
 Login.propTypes = {
   login: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
   postLogin: PropTypes.func.isRequired,
 };

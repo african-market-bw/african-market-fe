@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import { postSignUp } from '../../store/actions/users';
+import { postSignUp, errorLogin } from '../../store/actions/users';
 import useStyles from './styles';
 import Error from './error';
-
+import Spinner from '../../UI/spinner';
 
 const SignUp = (props) => {
   const classes = useStyles();
@@ -38,8 +38,10 @@ const SignUp = (props) => {
 
   const { login } = props;
   const { error } = props;
+  const { loading } = props;
   return (
     <div>
+      {loading && <Spinner />}
       {error && !login
         && (
         <Error>
@@ -114,13 +116,15 @@ X
 const mapStateToProps = state => ({
   login: state.login,
   error: state.error,
+  loading: state.loading,
 });
 
-export default connect(mapStateToProps, { postSignUp })(withRouter(SignUp));
+export default connect(mapStateToProps, { postSignUp, errorLogin })(withRouter(SignUp));
 
 SignUp.propTypes = {
   postSignUp: PropTypes.func.isRequired,
   login: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
