@@ -4,14 +4,18 @@ import {
   TextField, Button,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 import { postLogin } from '../../store/actions/users';
 import useStyles from './styles';
+import Error from './error';
 
 const Login = (props) => {
   const classes = useStyles();
   const username = React.createRef();
   const password = React.createRef();
+
+  const clearError = () => styled(Error)`display: none;`;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -20,11 +24,32 @@ const Login = (props) => {
     if (usersName.trim() && userPassword.trim()) {
       const userData = { username: usersName, password: userPassword };
       props.postLogin(userData);
-      props.history.push('/users');
     }
   };
+  const { login } = props;
+  const { error } = props;
+  if (login) return <Redirect to="/users" />;
+
   return (
     <div>
+      {error && !login
+        && (
+        <Error>
+          {' '}
+          <span
+            onClick={clearError}
+            onKeyPress={clearError}
+            role="button"
+            tabIndex="0"
+          >
+X
+
+          </span>
+          <p>{error}</p>
+          {' '}
+        </Error>
+        )
+      }
       <form className={classes.container} onSubmit={e => onSubmitHandler(e)}>
         <h2> Kindly Input Your Login Details</h2>
         <TextField
@@ -58,11 +83,15 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, { postLogin })(withRouter(Login));
+const mapStateToProps = state => ({
+  login: state.login,
+  error: state.error,
+});
+
+export default connect(mapStateToProps, { postLogin })(Login);
 
 Login.propTypes = {
+  login: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   postLogin: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
