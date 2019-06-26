@@ -26,6 +26,7 @@ const signUp = message => ({
 
 export const postLogin = data => async (dispatch) => {
   dispatch(loading(true));
+  dispatch(errorLogin(''));
   try {
     const response = await axois.post('/auth/login', data);
     localStorage.setItem('userToken', response.data.token);
@@ -40,6 +41,7 @@ export const postLogin = data => async (dispatch) => {
 
 export const postSignUp = data => async (dispatch) => {
   dispatch(loading(true));
+  dispatch(errorLogin(''));
   try {
     const response = await axois.post('/auth/register', data);
     dispatch(signUp(response.data));
