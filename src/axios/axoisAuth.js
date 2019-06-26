@@ -1,4 +1,4 @@
-import axois from 'axois';
+import axois from 'axios';
 
 // axoisRetry(axios)
 const axoisAuth = () => {

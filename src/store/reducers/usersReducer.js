@@ -5,6 +5,7 @@ const initialState = {
   login: false,
   loading: false,
   error: '',
+  message: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -15,6 +16,7 @@ const userReducer = (state = initialState, action) => {
         login: true,
         error: '',
         user: action.payload,
+        message: action.message,
       };
     case actions.ERROR:
       return {
@@ -25,6 +27,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case actions.SIGNUP:
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;
