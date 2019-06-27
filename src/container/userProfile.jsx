@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import UserNavBar from '../components/users/usersNav';
 import Product from '../components/products/products';
-import { getAllProducts, getAUserProduct, addProduct } from '../store/actions/products';
+import { getAllProducts, getAUserProduct } from '../store/actions/products';
 import Spinner from '../UI/spinner';
 import BtnControl from '../components/products/productBtn';
 import Modal from '../UI/modal';
@@ -35,10 +35,10 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
-    const { subject } = this.props.user;
-    console.log(subject);
+    // const { subject } = this.props.user;
     // eslint-disable-next-line react/destructuring-assignment
-    this.props.getAUserProduct(subject);
+    // this.props.getAUserProduct(subject);
+    this.props.getAllProducts();
     // this.props.getAUserProduct();
   }
 
@@ -107,16 +107,15 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getAllProducts, getAUserProduct, addProduct
+  getAllProducts, getAUserProduct,
 })(UserProfile);
 
 
 UserProfile.propTypes = {
   getAUserProduct: PropTypes.func.isRequired,
-  addProduct: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  // getAllProducts: PropTypes.func.isRequired,
+  getAllProducts: PropTypes.func.isRequired,
   products: PropTypes.arrayOf({
 
   }).isRequired,

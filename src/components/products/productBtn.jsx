@@ -11,7 +11,6 @@ const Div = styled.div`
 `;
 
 const Btn = ({ show, id }) => {
-  console.log(id);
   return (
     <Div>
       <Button

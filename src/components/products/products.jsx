@@ -1,28 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './product.css';
+import faker from 'faker';
 
+const productImg = faker.random.image();
 const Products = ({ product, children }) => (
   <div className="Card">
     <div className="Overlay">
       {children}
     </div>
+    <img src={productImg} alt="images" />
     <h2>{product.name}</h2>
-    <p>
+    <div className="Container">
+      <div className="Container-left">
+        <p>
 Description:
-      {' '}
-      {product.description}
-    </p>
-    <p>
-Price:
-      {' '}
-      {product.price}
-    </p>
-    <p>
+          {' '}
+          {product.description}
+        </p>
+        <p>
 Location:
-      {' '}
-      {product.location}
-    </p>
+          {' '}
+          {product.location}
+        </p>
+      </div>
+      <div className="Container-right">
+        <p>
+Price:
+          {' '}
+          {product.price}
+        </p>
+      </div>
+    </div>
   </div>
 );
 

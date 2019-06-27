@@ -8,7 +8,7 @@ import { addProduct } from '../../store/actions/products';
 
 const ProductForm = (props) => {
   dotenv.config();
-  const { id, user_id} = props;
+  const { id, user_id } = props;
   const nameRef = createRef();
   const description = createRef();
   const location = createRef();
@@ -39,10 +39,18 @@ const ProductForm = (props) => {
         name,
         price,
         user_id,
-        location,
-        description,
+        location: location.current.value,
+        description: description.current.value,
         pictureURL: images,
       };
+
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('price', price);
+      formData.append('user_id', user_id);
+      formData.append('location', location.current.value);
+      formData.append('description', description.current.value);
+      formData.append('pictureURL', images);
       props.addProduct(productForm);
     } else {
       toast.error('name and price are required');
@@ -55,7 +63,7 @@ const ProductForm = (props) => {
   return (
     <Div>
       <form onSubmit={e => onSubmit(e)}>
-        <input type="text" placeholder="name" ref={nameRef} />
+        <input type="text" placeholder="name" ref={nameRef} name="name" />
         <input type="text" placeholder="description" ref={description} />
         <input type="file" placeholder="image" onChange={e => cloudinaryImageUploader(e)} />
         <input type="text" placeholder="location" ref={location} />
