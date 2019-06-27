@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import UserNavBar from '../components/users/usersNav';
 import Product from '../components/products/products';
-import { getAllProducts, getAUserProduct } from '../store/actions/products';
+import { getAllProducts, getAUserProduct, addProduct } from '../store/actions/products';
 import Spinner from '../UI/spinner';
 import BtnControl from '../components/products/productBtn';
 import Modal from '../UI/modal';
@@ -61,6 +61,7 @@ class UserProfile extends Component {
     const { update } = this.state;
     const { loading } = this.props;
     const { products } = this.props;
+    const { subject } = this.props.user;
     // const { error } = this.props;
     const { message } = this.props;
     if (message) {
@@ -70,7 +71,7 @@ class UserProfile extends Component {
       <div>
         <UserNavBar handleOpen={this.modalHandler} />
         {loading && <Spinner /> }
-        <Div >
+        <Div>
           {!loading && products.map(product => (
             <div
               style={{
@@ -92,8 +93,7 @@ class UserProfile extends Component {
           handleClose={this.handleClose}
           handleOpen={this.modalHandler}
         >
-          {' '}
-          <Form id={update} />
+          <Form id={update} user_id={subject} />
         </Modal>
       </div>
     );
@@ -107,12 +107,13 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getAllProducts, getAUserProduct,
+  getAllProducts, getAUserProduct, addProduct
 })(UserProfile);
 
 
 UserProfile.propTypes = {
   getAUserProduct: PropTypes.func.isRequired,
+  addProduct: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   // getAllProducts: PropTypes.func.isRequired,
