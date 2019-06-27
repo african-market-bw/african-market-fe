@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import './product.css';
 
-const Div = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    border: 1px solid #ddd;
-    margin: .5rem 1rem;
-`;
-
-const Products = ({ product }) => (
-  <Div>
-    <h2>{product.product}</h2>
+const Products = ({ product, children }) => (
+  <div className="Card">
+    <div className="Overlay">
+      {children}
+    </div>
+    <h2>{product.name}</h2>
     <p>
 Description:
       {' '}
@@ -28,14 +23,14 @@ Location:
       {' '}
       {product.location}
     </p>
-  </Div>
+  </div>
 );
 
 export default Products;
 
 Products.propTypes = {
   product: PropTypes.shape({
-    product: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,

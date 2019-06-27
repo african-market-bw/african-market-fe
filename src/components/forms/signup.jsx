@@ -30,7 +30,7 @@ const SignUp = (props) => {
         password: userPassword,
       };
       props.postSignUp(userData);
-      props.history.push('/users');
+      // props.history.push('/users');
     }
   };
   const { login } = props;

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import HomePage from './container/homepage';
-import UserPage from './components/users/userProfile';
+import UserPage from './container/userProfile';
 import PrivateRoute from './HOC/privateRoute';
 
 

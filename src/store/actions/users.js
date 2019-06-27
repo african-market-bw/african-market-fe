@@ -38,7 +38,7 @@ export const postLogin = data => async (dispatch) => {
     const decoded = jwt.decode(response.data.token);
     dispatch(successLogin(decoded)(response.data.message));
   } catch (error) {
-    dispatch(errorLogin(error.message));
+    dispatch(errorLogin('invalid username and password'));
   } finally {
     dispatch(loading(false));
   }
@@ -51,8 +51,8 @@ export const postSignUp = data => async (dispatch) => {
     const response = await axois.post('/auth/register', data);
     dispatch(signUp(response.data));
   } catch (error) {
-    dispatch(errorSignUp(error.message));
+    dispatch(errorSignUp('failed signup kindly input valid information'));
   } finally {
-    dispatch(loading(true));
+    dispatch(loading(false));
   }
 };
