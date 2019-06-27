@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const PrivateRoute = ({ component: Component, login, ...rest }) => (
   <Route
     {...rest}
-    render={props => (localStorage.getItem('userToken') ? (
+    render={props => (login ? (
       <Component {...props} />
     ) : (<Redirect to="/" />)
     )}

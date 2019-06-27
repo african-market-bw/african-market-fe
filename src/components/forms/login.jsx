@@ -26,9 +26,14 @@ const Login = (props) => {
     }
   };
   const { login } = props;
+  const { user } = props;
   const { error } = props;
   const { loading } = props;
-  if (login) return <Redirect to="/users" />;
+  if (login && user) {
+    return (
+      <Redirect to="/users" />
+    );
+  }
   if (error) {
     toast.error(error);
   }
@@ -73,6 +78,7 @@ const Login = (props) => {
 
 const mapStateToProps = state => ({
   login: state.user.login,
+  user: state.user.user,
   error: state.user.errorLogin,
   loading: state.user.loading,
 });

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 import Navigation from '../components/navigation/navigationItems';
 import Modal from '../UI/modal';
 import SignUp from '../components/forms/signup';
@@ -9,6 +11,16 @@ import { getAllProducts } from '../store/actions/products';
 import Spinner from '../UI/spinner';
 import Products from '../components/products/products';
 
+const Div = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  @media (max-width: 700px) {
+    
+  }
+   @media (max-width: 500px) {
+      flex-direction: column;
+    }
+`;
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -55,11 +67,19 @@ class HomePage extends Component {
           {signUp ? <SignUp /> : <Login />}
         </Modal>
         {loading && <Spinner /> }
-        <div style={{ display: 'flex' }}>
+        <Div>
           {!loading && products.map(product => (
-            <Products product={product} key={product.id} />
+            <Products product={product} key={product.id}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ margin: '1rem' }}
+              >
+                  Buy
+              </Button>
+            </Products>
           ))}
-        </div>
+        </Div>
       </div>
     );
   }
