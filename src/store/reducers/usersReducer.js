@@ -36,7 +36,6 @@ const userReducer = (state = initialState, action) => {
         ...state,
         message: action.payload,
         errorSignUp: '',
-        // login: true,
       };
     case actions.ERROR_LOGIN:
       return {

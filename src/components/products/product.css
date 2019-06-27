@@ -7,6 +7,24 @@
     margin: .5rem 1rem;
 }
 
+.Card img{
+  width: 300px;
+  height: 250px;
+}
+
+.Card p{
+  color: green;
+}
+
+.Card .Container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.Card .Container-left p {
+  color: #932723
+}
+
 .Overlay {
     position: absolute;
     display: flex;

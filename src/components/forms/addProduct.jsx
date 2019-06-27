@@ -1,74 +1,77 @@
 import React, { createRef } from 'react';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
+import dotenv from 'dotenv';
+import axois from 'axios';
+import { toast } from 'react-toastify';
+import Div from './productStyles';
+import { addProduct } from '../../store/actions/products';
 
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 300px;
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    border: 1px solid #ddd;
-    height: 100%;
-
-    input {
-      border: 1px solid #ddd;
-      &:hover {
-        width: 93%;
-        transition: all 5 ease-out;
-      }
-    }
-
-    input,button {
-      margin: 5px;
-      width: 90%;
-      padding: 5px;
-      height: 25px;
-      outline: none;
-    }
-
-    button {
-      height: 30px;
-      background-color: #4040a1;
-      color: #fff;
-      cursor: pointer;
-      &:hover {
-        width: 99%;
-        background-color: #36486b;
-        transition: all 5 ease-in-out;
-      }
-    }
-  }
-`;
-
-const ProductForm = ({ id }) => {
-  const name = createRef();
+const ProductForm = (props) => {
+  dotenv.config();
+  const { id, user_id } = props;
+  const nameRef = createRef();
   const description = createRef();
   const location = createRef();
-  const price = createRef();
-  const user_id = createRef();
+  const priceRef = createRef();
+  // const user_id = createRef();
+  let images;
+  const cloudinaryImageUploader = async (e) => {
+    const file = e.target.files[0];
+    const url = 'https://api.cloudinary.com/v1_1/cristos/image/upload';
+    const presept = 'zdupfz33';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', presept);
+    try {
+      const response = await axois.post(url, formData);
+      images = response.data.secure_url;
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const name = nameRef.current.value;
+    const price = priceRef.current.value;
+    if (name.trim() && price.trim()) {
+      const productForm = {
+        name,
+        price,
+        user_id,
+        location: location.current.value,
+        description: description.current.value,
+        pictureURL: images,
+      };
+
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('price', price);
+      formData.append('user_id', user_id);
+      formData.append('location', location.current.value);
+      formData.append('description', description.current.value);
+      formData.append('pictureURL', images);
+      props.addProduct(productForm);
+    } else {
+      toast.error('name and price are required');
+    }
+  };
   let btnName = 'Add';
   if (id) {
     btnName = 'Update';
   }
   return (
     <Div>
-      <form>
-        <input type="text" placeholder="name" ref={name}/>
-        <input type="text" placeholder="description" ref={description}/>
-        <input type="file" placeholder="image" ref={}/>
-        <input type="text" placeholder="location" ref={location}/>
-        <input type="text" placeholder="price" ref={price}/>
+      <form onSubmit={e => onSubmit(e)}>
+        <input type="text" placeholder="name" ref={nameRef} name="name" />
+        <input type="text" placeholder="description" ref={description} />
+        <input type="file" placeholder="image" onChange={e => cloudinaryImageUploader(e)} />
+        <input type="text" placeholder="location" ref={location} />
+        <input type="text" placeholder="price" ref={priceRef} />
         <button type="submit">{btnName}</button>
       </form>
     </Div>
   );
 };
 
-export default ProductForm;
+export default connect(null, { addProduct })(ProductForm);

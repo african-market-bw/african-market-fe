@@ -35,10 +35,10 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
-    const { subject } = this.props.user;
-    console.log(subject);
+    // const { subject } = this.props.user;
     // eslint-disable-next-line react/destructuring-assignment
-    this.props.getAUserProduct(subject);
+    // this.props.getAUserProduct(subject);
+    this.props.getAllProducts();
     // this.props.getAUserProduct();
   }
 
@@ -61,6 +61,7 @@ class UserProfile extends Component {
     const { update } = this.state;
     const { loading } = this.props;
     const { products } = this.props;
+    const { subject } = this.props.user;
     // const { error } = this.props;
     const { message } = this.props;
     if (message) {
@@ -70,7 +71,7 @@ class UserProfile extends Component {
       <div>
         <UserNavBar handleOpen={this.modalHandler} />
         {loading && <Spinner /> }
-        <Div >
+        <Div>
           {!loading && products.map(product => (
             <div
               style={{
@@ -92,8 +93,7 @@ class UserProfile extends Component {
           handleClose={this.handleClose}
           handleOpen={this.modalHandler}
         >
-          {' '}
-          <Form id={update} />
+          <Form id={update} user_id={subject} />
         </Modal>
       </div>
     );
@@ -115,7 +115,7 @@ UserProfile.propTypes = {
   getAUserProduct: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  // getAllProducts: PropTypes.func.isRequired,
+  getAllProducts: PropTypes.func.isRequired,
   products: PropTypes.arrayOf({
 
   }).isRequired,

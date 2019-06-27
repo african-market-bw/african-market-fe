@@ -60,8 +60,10 @@ export const addProduct = product => async (dispatch) => {
   dispatch(loading(true));
   try {
     const response = await axois.post('/products', product);
+    debugger
     console.log(response.data);
   } catch (err) {
+    debugger
     console.log(err);
   } finally {
     dispatch(loading(false));
