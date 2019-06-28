@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './product.css';
-import faker from 'faker';
 
-const productImg = faker.random.image();
-// eslint-disable-next-line react/prop-types
 const Products = ({ product, children }) => (
   <div className="Card">
     <div className="Overlay">
       {children}
     </div>
-    <img src={productImg} alt="images" loading="eager" />
-    {/* <img src={product.pictureURL} alt="images" loading="eager" /> */}
+    <img src={product.pictureURL} alt="images" loading="eager" />
     <h2>{product.name}</h2>
     <div className="Container">
       <div className="Container-left">
