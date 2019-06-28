@@ -79,15 +79,30 @@ export const addProduct = product => async (dispatch) => {
   }
 };
 
+const getAItemProduct = product => ({
+  type: actions.GET_A_PRODUCTS,
+  payload: product,
+});
+
+export const getAproduct = id => async (dispatch) => {
+  dispatch(loading(true));
+  try {
+    const response = await axois.get(`/products/${id}`);
+    dispatch(getAItemProduct(response.data));
+  } catch (err) {
+    dispatch(error(err.message));
+  } finally {
+    dispatch(loading(false));
+  }
+};
 export const updateProduct = (id, product) => async (dispatch) => {
   dispatch(loading(true));
   try {
-    const response = await axois.put(`/products/${id}`, product);
-    debugger;
-    console.log(response.data);
-  } catch (error) {
-    debugger;
-  }finally{
+    const response = await axoisAuth().put(`/products/${id}`, product);
+    dispatch(update(response.data));
+  } catch (err) {
+    dispatch(error(err.message));
+  } finally {
     dispatch(loading(false));
   }
-}
+};

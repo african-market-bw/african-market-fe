@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   items: 0,
   addMessage: '',
+  update: '',
 };
 
 const productReducer = (state = initialState, action) => {
@@ -39,6 +40,18 @@ const productReducer = (state = initialState, action) => {
         ...state,
         error: '',
         addMessage: 'item added succesfully',
+      };
+    case actions.GET_A_PRODUCTS:
+      return {
+        ...state,
+        error: '',
+        update: action.payload,
+      };
+    case actions.UPDATE_PRODUCTS:
+      return {
+        ...state,
+        error: '',
+        addMessage: 'item updated succesfully',
       };
     default:
       return state;
