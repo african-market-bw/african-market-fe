@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 import React, { createRef } from 'react';
 import { connect } from 'react-redux';
@@ -5,7 +6,7 @@ import dotenv from 'dotenv';
 import axois from 'axios';
 import { toast } from 'react-toastify';
 import Div from './productStyles';
-import { addProduct } from '../../store/actions/products';
+import { addProduct, getAproduct, updateProduct } from '../../store/actions/products';
 
 const ProductForm = (props) => {
   dotenv.config();
@@ -15,7 +16,6 @@ const ProductForm = (props) => {
   const description = createRef();
   const location = createRef();
   const priceRef = createRef();
-  // const user_id = createRef();
   let images;
   const cloudinaryImageUploader = async (e) => {
     const file = e.target.files[0];
@@ -32,6 +32,7 @@ const ProductForm = (props) => {
     }
   };
 
+
   const onSubmit = (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
@@ -46,27 +47,38 @@ const ProductForm = (props) => {
         pictureURL: images,
       };
       // eslint-disable-next-line react/prop-types
-      props.addProduct(productForm);
+      if (id) {
+        props.updateProduct(id, productForm);
+      } else {
+        props.addProduct(productForm);
+      }
     } else {
-      toast.error('name and price are required');
+      toast.error('name price and image are required');
     }
   };
   let btnName = 'Add';
-  if (id) {
+  const { update } = props;
+
+  if (id && !update) {
     btnName = 'Update';
+    props.getAproduct(id);
   }
   return (
     <Div>
       <form onSubmit={e => onSubmit(e)}>
-        <input type="text" placeholder="name" ref={nameRef} name="name" />
-        <input type="text" placeholder="description" ref={description} />
+        <input type="text" placeholder="name" ref={nameRef} name="name" defaultValue={update.name} />
+        <input type="text" placeholder="description" ref={description} defaultValue={update.description} />
         <input type="file" placeholder="image" onChange={e => cloudinaryImageUploader(e)} />
-        <input type="text" placeholder="location" ref={location} />
-        <input type="text" placeholder="price" ref={priceRef} />
+        <input type="text" placeholder="location" ref={location} defaultValue={update.location} />
+        <input type="text" placeholder="price" ref={priceRef} defaultValue={update.price} />
         <button type="submit">{btnName}</button>
       </form>
     </Div>
   );
 };
 
-export default connect(null, { addProduct })(ProductForm);
+const mapStateToProps = state => ({
+  update: state.product.update,
+});
+
+export default connect(mapStateToProps, { addProduct, getAproduct, updateProduct })(ProductForm);
