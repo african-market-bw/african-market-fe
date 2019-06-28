@@ -58,11 +58,10 @@ export const getAllProducts = () => async (dispatch) => {
 export const getAUserProduct = id => async (dispatch) => {
   dispatch(loading(true));
   try {
-    const response = await axois.get(`/products/${id}`);
+    const response = await axoisAuth().get(`/products/user/${id}`);
     dispatch(getUserProduct(response.data));
-    console.log(response.data);
   } catch (err) {
-    console.log(err);
+    dispatch(error(err.message));
   } finally {
     dispatch(loading(false));
   }
