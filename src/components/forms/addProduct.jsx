@@ -48,7 +48,7 @@ const ProductForm = (props) => {
       };
       // eslint-disable-next-line react/prop-types
       if (id) {
-        props.updateProduct(id);
+        props.updateProduct(id, productForm);
       } else {
         props.addProduct(productForm);
       }

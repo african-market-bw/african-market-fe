@@ -12,3 +12,4 @@ export const ADD_PRODUCTS = 'ADD_PRODUCTS';
 export const ORDERS = 'ORDERS';
 export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS';
 export const GET_A_PRODUCTS = 'GET_A_PRODUCTS';
+export const DELETE = 'DELETE';

@@ -84,6 +84,11 @@ const getAItemProduct = product => ({
   payload: product,
 });
 
+const deleteProduct = message => ({
+  type: actions.DELETE,
+  message,
+});
+
 export const getAproduct = id => async (dispatch) => {
   dispatch(loading(true));
   try {
@@ -100,6 +105,18 @@ export const updateProduct = (id, product) => async (dispatch) => {
   try {
     const response = await axoisAuth().put(`/products/${id}`, product);
     dispatch(update(response.data));
+  } catch (err) {
+    dispatch(error(err.message));
+  } finally {
+    dispatch(loading(false));
+  }
+};
+
+export const deleteAProduct = id => async (dispatch) => {
+  dispatch(loading(true));
+  try {
+    const response = await axoisAuth().delete(`/products/${id}`);
+    dispatch(deleteProduct(response.data));
   } catch (err) {
     dispatch(error(err.message));
   } finally {

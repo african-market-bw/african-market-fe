@@ -95,10 +95,6 @@ function SearchAppBar(props) {
           <Typography className={classes.title} variant="h6" noWrap>
             African Market
           </Typography>
-          <div style={{ display: 'flex', margin: '1rem' }}>
-            <i className="fas fa-cart-plus fa-2x" />
-            <span style={{ marginTop: '-7px', fontSize: '20px' }}>{items}</span>
-          </div>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -111,6 +107,10 @@ function SearchAppBar(props) {
               }}
               inputProps={{ 'aria-label': 'Search' }}
             />
+          </div>
+          <div style={{ display: 'flex', margin: '1rem' }}>
+            <i className="fas fa-cart-plus fa-2x" />
+            <span style={{ marginTop: '-7px', fontSize: '20px', color: 'red' }}>{items}</span>
           </div>
         </Toolbar>
       </AppBar>

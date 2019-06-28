@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-
+import { deleteAProduct } from '../../store/actions/products';
 
 const Div = styled.div`
     display: flex;
@@ -10,7 +12,8 @@ const Div = styled.div`
     align-items: center;
 `;
 
-const Btn = ({ show, id }) => {
+const Btn = (props) => {
+  const { show, id, deleteAProduct } = props;
   return (
     <Div>
       <Button
@@ -26,6 +29,7 @@ Update
         variant="contained"
         color="secondary"
         style={{ margin: '1rem' }}
+        onClick={() => deleteAProduct(id)}
       >
 Delete
 
@@ -35,4 +39,4 @@ Delete
   );
 };
 
-export default Btn;
+export default connect(null, { deleteAProduct })(Btn);
