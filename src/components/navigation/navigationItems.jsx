@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -75,6 +76,7 @@ function SearchAppBar(props) {
   }
 
   const { items } = props;
+  const { login } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -87,7 +89,7 @@ function SearchAppBar(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={() => props.handleOpen()(true)}>Register</MenuItem>
+            {!login && <MenuItem onClick={() => props.handleOpen()(true)}>Register</MenuItem>}
             <MenuItem onClick={() => props.handleOpen()(false)}> Login</MenuItem>
           </Menu>
           <Typography className={classes.title} variant="h6" noWrap>
@@ -118,6 +120,7 @@ function SearchAppBar(props) {
 
 const mapStateToProps = state => ({
   items: state.product.items,
+  login: state.user.login,
 });
 
 export default connect(mapStateToProps)(SearchAppBar);
