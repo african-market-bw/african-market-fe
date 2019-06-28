@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import HomePage from './container/homepage';
 import UserPage from './container/userProfile';
 import PrivateRoute from './HOC/privateRoute';
+import ErrorPage from './components/errorPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <PrivateRoute exact path="/users" component={UserPage} />
         <ToastContainer />
+        <Route exact path="*" component={ErrorPage} />
       </Router>
     </div>
   );

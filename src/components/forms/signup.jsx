@@ -35,6 +35,8 @@ const SignUp = (props) => {
         password: userPassword,
       };
       props.postSignUp(userData);
+    } else {
+      toast.error('all fields are required');
     }
   };
   if (error) {

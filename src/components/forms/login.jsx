@@ -23,9 +23,12 @@ const Login = (props) => {
     if (usersName.trim() && userPassword.trim()) {
       const userData = { username: usersName, password: userPassword };
       props.postLogin(userData);
+    } else {
+      toast.error('all fields are required');
     }
   };
   const { login } = props;
+  // eslint-disable-next-line react/prop-types
   const { user } = props;
   const { error } = props;
   const { loading } = props;
