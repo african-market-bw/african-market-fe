@@ -45,14 +45,6 @@ const ProductForm = (props) => {
         description: description.current.value,
         pictureURL: images,
       };
-
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('price', price);
-      formData.append('user_id', user_id);
-      formData.append('location', location.current.value);
-      formData.append('description', description.current.value);
-      formData.append('pictureURL', images);
       // eslint-disable-next-line react/prop-types
       props.addProduct(productForm);
     } else {

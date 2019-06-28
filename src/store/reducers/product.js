@@ -29,6 +29,11 @@ const productReducer = (state = initialState, action) => {
         addMessage: '',
         error: '',
       };
+    case actions.GET_USER_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+      };
     case actions.ADD_PRODUCTS:
       return {
         ...state,

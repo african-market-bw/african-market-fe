@@ -40,8 +40,8 @@ class UserProfile extends Component {
     // eslint-disable-next-line react/destructuring-assignment
     // this.props.getAUserProduct(subject);
     // eslint-disable-next-line react/destructuring-assignment
-    this.props.getAllProducts();
-    // this.props.getAUserProduct();
+    // this.props.getAllProducts();
+    this.props.getAUserProduct();
   }
 
   modalHandler() {
@@ -72,7 +72,7 @@ class UserProfile extends Component {
       toast.success(message);
     }
     if (error) toast.error(error);
-    if (addMessage) toast.success(addMessage)
+    if (addMessage) toast.success(addMessage);
     return (
       <div>
         <UserNavBar handleOpen={this.modalHandler} />

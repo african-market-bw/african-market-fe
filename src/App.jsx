@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import HomePage from './container/homepage';
 import UserPage from './container/userProfile';
 import PrivateRoute from './HOC/privateRoute';
-import ErrorPage from './components/errorPage';
+
 
 function App() {
   return (
