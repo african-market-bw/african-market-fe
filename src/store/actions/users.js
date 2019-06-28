@@ -24,9 +24,10 @@ const loading = bool => ({
   payload: bool,
 });
 
-const signUp = message => ({
+const signUp = user => message => ({
   type: actions.SIGNUP,
-  payload: message,
+  payload: user,
+  message,
 });
 
 export const postLogin = data => async (dispatch) => {
@@ -49,7 +50,9 @@ export const postSignUp = data => async (dispatch) => {
   dispatch(errorSignUp(''));
   try {
     const response = await axois.post('/auth/register', data);
-    dispatch(signUp(response.data));
+    localStorage.setItem('userToken', response.data.token);
+    const decoded = jwt.decode(response.data.token);
+    dispatch(signUp(decoded)(response.data.message));
   } catch (error) {
     dispatch(errorSignUp('failed signup kindly input valid information'));
   } finally {

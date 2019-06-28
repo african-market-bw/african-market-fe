@@ -7,7 +7,6 @@ import HomePage from './container/homepage';
 import UserPage from './container/userProfile';
 import PrivateRoute from './HOC/privateRoute';
 
-
 function App() {
   return (
     <div className="App">
