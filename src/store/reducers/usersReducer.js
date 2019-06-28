@@ -30,24 +30,30 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: action.payload,
         message: '',
+        errorLogin: '',
+        errorSignUp: '',
       };
     case actions.SIGNUP:
       return {
         ...state,
-        message: action.payload,
+        user: action.payload,
+        message: action.message,
         errorSignUp: '',
+        login: true,
       };
     case actions.ERROR_LOGIN:
       return {
         ...state,
         errorLogin: action.payload,
         message: '',
+        errorSignUp: '',
       };
     case actions.ERROR_SIGNUP:
       return {
         ...state,
         errorSignUp: action.payload,
         message: '',
+        errorLogin: '',
       };
     default:
       return state;

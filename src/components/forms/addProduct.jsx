@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { createRef } from 'react';
 import { connect } from 'react-redux';
 import dotenv from 'dotenv';
@@ -8,6 +9,7 @@ import { addProduct } from '../../store/actions/products';
 
 const ProductForm = (props) => {
   dotenv.config();
+  // eslint-disable-next-line react/prop-types
   const { id, user_id } = props;
   const nameRef = createRef();
   const description = createRef();
@@ -51,6 +53,7 @@ const ProductForm = (props) => {
       formData.append('location', location.current.value);
       formData.append('description', description.current.value);
       formData.append('pictureURL', images);
+      // eslint-disable-next-line react/prop-types
       props.addProduct(productForm);
     } else {
       toast.error('name and price are required');

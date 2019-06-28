@@ -1,6 +1,7 @@
 
 import * as actions from './actions';
 import axois from '../../axios/axois';
+import axoisAuth from '../../axios/axoisAuth';
 
 const fetchProductSuccess = products => ({
   type: actions.GET_ALL_PRODUCTS,
@@ -32,6 +33,16 @@ const addUserProduct = product => ({
   payload: product,
 });
 
+
+export const orderSumary = () => ({
+  type: actions.ORDERS,
+});
+
+const update = product => ({
+  type: actions.UPDATE_PRODUCTS,
+  payload: product,
+});
+
 export const getAllProducts = () => async (dispatch) => {
   dispatch(loading(true));
   try {
@@ -48,6 +59,7 @@ export const getAUserProduct = id => async (dispatch) => {
   dispatch(loading(true));
   try {
     const response = await axois.get(`/products/${id}`);
+    dispatch(getUserProduct(response.data));
     console.log(response.data);
   } catch (err) {
     console.log(err);
@@ -59,13 +71,24 @@ export const getAUserProduct = id => async (dispatch) => {
 export const addProduct = product => async (dispatch) => {
   dispatch(loading(true));
   try {
-    const response = await axois.post('/products', product);
-    debugger
-    console.log(response.data);
+    const response = await axoisAuth().post('/products', product);
+    dispatch(addUserProduct(response.data));
   } catch (err) {
-    debugger
-    console.log(err);
+    dispatch(error('unsuccessfull'));
   } finally {
     dispatch(loading(false));
   }
 };
+
+export const updateProduct = (id, product) => async (dispatch) => {
+  dispatch(loading(true));
+  try {
+    const response = await axois.put(`/products/${id}`, product);
+    debugger;
+    console.log(response.data);
+  } catch (error) {
+    debugger;
+  }finally{
+    dispatch(loading(false));
+  }
+}

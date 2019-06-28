@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,7 +15,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -78,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PrimarySearchAppBar({handleOpen}) {
+function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -103,8 +104,6 @@ export default function PrimarySearchAppBar({handleOpen}) {
     setMobileMoreAnchorEl(event.currentTarget);
   }
 
-  const homeRidirect = () => <Redirect to="/" />;
-
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -116,7 +115,7 @@ export default function PrimarySearchAppBar({handleOpen}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => handleOpen()(null)}>Add Product</MenuItem>
+      <MenuItem onClick={() => props.handleOpen()(null)}>Add Product</MenuItem>
       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
@@ -166,16 +165,8 @@ export default function PrimarySearchAppBar({handleOpen}) {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Open drawer"
-
-          >
-            <MenuIcon onClick={homeRidirect} />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap onClick={homeRidirect}>
+          <MenuIcon onClick={() => props.history.push('/')} />
+          <Typography className={classes.title} variant="h6">
             African Market
           </Typography>
           <div className={classes.search}>
@@ -232,3 +223,5 @@ export default function PrimarySearchAppBar({handleOpen}) {
     </div>
   );
 }
+
+export default withRouter(PrimarySearchAppBar);

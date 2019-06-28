@@ -10,6 +10,7 @@ import Spinner from '../UI/spinner';
 import BtnControl from '../components/products/productBtn';
 import Modal from '../UI/modal';
 import Form from '../components/forms/addProduct';
+import Footer from '../components/footer/footer';
 
 const Div = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ class UserProfile extends Component {
     // const { subject } = this.props.user;
     // eslint-disable-next-line react/destructuring-assignment
     // this.props.getAUserProduct(subject);
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.getAllProducts();
     // this.props.getAUserProduct();
   }
@@ -61,40 +63,51 @@ class UserProfile extends Component {
     const { update } = this.state;
     const { loading } = this.props;
     const { products } = this.props;
+    // eslint-disable-next-line react/prop-types
     const { subject } = this.props.user;
-    // const { error } = this.props;
+    const { error } = this.props;
+    const { addMessage } = this.props;
     const { message } = this.props;
     if (message) {
       toast.success(message);
     }
+    if (error) toast.error(error);
+    if (addMessage) toast.success(addMessage)
     return (
       <div>
         <UserNavBar handleOpen={this.modalHandler} />
-        {loading && <Spinner /> }
-        <Div>
-          {!loading && products.map(product => (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                border: '1px solid #ddd',
-                margin: '1rem',
-              }}
-              key={product.id}
-            >
-              <Product product={product}>
-                <BtnControl show={this.modalHandler} id={product.id} />
-              </Product>
+        {loading ? <Spinner />
+          : (
+            <div>
+
+              <Div>
+                {!loading && products.map(product => (
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      border: '1px solid #ddd',
+                      margin: '1rem',
+                    }}
+                    key={product.id}
+                  >
+                    <Product product={product}>
+                      <BtnControl show={this.modalHandler} id={product.id} />
+                    </Product>
+                  </div>
+                ))}
+              </Div>
+              <Modal
+                open={open}
+                handleClose={this.handleClose}
+                handleOpen={this.modalHandler}
+              >
+                <Form id={update} user_id={subject} />
+              </Modal>
+              <Footer />
             </div>
-          ))}
-        </Div>
-        <Modal
-          open={open}
-          handleClose={this.handleClose}
-          handleOpen={this.modalHandler}
-        >
-          <Form id={update} user_id={subject} />
-        </Modal>
+          )
+      }
       </div>
     );
   }
@@ -104,6 +117,8 @@ const mapStateToProps = state => ({
   loading: state.product.loading,
   products: state.product.products,
   message: state.user.message,
+  error: state.product.error,
+  addMessage: state.product.addMessage,
 });
 
 export default connect(mapStateToProps, {
@@ -112,12 +127,11 @@ export default connect(mapStateToProps, {
 
 
 UserProfile.propTypes = {
-  getAUserProduct: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired,
+  // getAUserProduct: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
+  addMessage: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
   getAllProducts: PropTypes.func.isRequired,
-  products: PropTypes.arrayOf({
-
-  }).isRequired,
+  products: PropTypes.arrayOf(PropTypes.any).isRequired,
   loading: PropTypes.bool.isRequired,
 };

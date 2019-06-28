@@ -5,7 +5,7 @@ import {
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { postSignUp, errorLogin } from '../../store/actions/users';
 import useStyles from './styles';
 import Spinner from '../../UI/spinner';
@@ -16,6 +16,11 @@ const SignUp = (props) => {
   const email = React.createRef();
   const password = React.createRef();
   const name = React.createRef();
+
+  const { user } = props;
+  const { login } = props;
+  const { error } = props;
+  const { loading } = props;
 
   const onSubmitHandler = () => {
     const usersName = username.current.value;
@@ -30,19 +35,20 @@ const SignUp = (props) => {
         password: userPassword,
       };
       props.postSignUp(userData);
-      // props.history.push('/users');
     }
   };
-  const { login } = props;
-  const { error } = props;
-  const { loading } = props;
   if (error) {
     toast.error(error);
+  }
+  if (login && user) {
+    return (
+      <Redirect to="/users" />
+    );
   }
   return (
     <div>
       {loading && <Spinner />}
-      {error && !login ? true : null}
+      {/* {error && !login ? true : null} */}
       <form className={classes.container}>
         <h2>Kindly Fill The Form</h2>
         <TextField
@@ -100,16 +106,15 @@ const mapStateToProps = state => ({
   login: state.user.login,
   error: state.user.errorSignUp,
   loading: state.user.loading,
+  user: state.user.user,
 });
 
-export default connect(mapStateToProps, { postSignUp, errorLogin })(withRouter(SignUp));
+export default connect(mapStateToProps, { postSignUp, errorLogin })(SignUp);
 
 SignUp.propTypes = {
   postSignUp: PropTypes.func.isRequired,
   login: PropTypes.bool.isRequired,
+  user: PropTypes.arrayOf(PropTypes.any).isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };

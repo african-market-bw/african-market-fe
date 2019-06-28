@@ -7,9 +7,10 @@ import Navigation from '../components/navigation/navigationItems';
 import Modal from '../UI/modal';
 import SignUp from '../components/forms/signup';
 import Login from '../components/forms/login';
-import { getAllProducts } from '../store/actions/products';
+import { getAllProducts, orderSumary } from '../store/actions/products';
 import Spinner from '../UI/spinner';
 import Products from '../components/products/products';
+import Footer from '../components/footer/footer';
 
 const Div = styled.div`
   display: flex;
@@ -66,20 +67,51 @@ class HomePage extends Component {
         >
           {signUp ? <SignUp /> : <Login />}
         </Modal>
-        {loading && <Spinner /> }
-        <Div>
-          {!loading && products.map(product => (
-            <Products product={product} key={product.id}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ margin: '1rem' }}
-              >
+        {loading ? <Spinner />
+          : (
+            <Div>
+              {!loading && products.map(product => (
+                <Products product={product} key={product.id}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ margin: '1rem' }}
+                // eslint-disable-next-line react/destructuring-assignment
+                    onClick={this.props.orderSumary}
+                  >
                   Buy
-              </Button>
-            </Products>
-          ))}
-        </Div>
+                  </Button>
+                </Products>
+              ))}
+              {!loading && products.map(product => (
+                <Products product={product} key={product.id}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ margin: '1rem' }}
+                // eslint-disable-next-line react/destructuring-assignment
+                    onClick={this.props.orderSumary}
+                  >
+                  Buy
+                  </Button>
+                </Products>
+              ))}
+              {!loading && products.map(product => (
+                <Products product={product} key={product.id}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ margin: '1rem' }}
+                // eslint-disable-next-line react/destructuring-assignment
+                    onClick={this.props.orderSumary}
+                  >
+                  Buy
+                  </Button>
+                </Products>
+              ))}
+              <Footer />
+            </Div>
+          )}
       </div>
     );
   }
@@ -91,13 +123,12 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  getAllProducts,
+  getAllProducts, orderSumary,
 })(HomePage);
 
 HomePage.propTypes = {
   getAllProducts: PropTypes.func.isRequired,
-  products: PropTypes.arrayOf({
-
-  }).isRequired,
+  orderSumary: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.any).isRequired,
   loading: PropTypes.bool.isRequired,
 };

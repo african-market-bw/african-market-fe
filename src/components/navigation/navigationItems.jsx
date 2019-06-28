@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
-  AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem,
+  AppBar, Toolbar, Typography, InputBase, Menu, MenuItem,
 } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -61,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SearchAppBar({ handleOpen }) {
+function SearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -73,32 +74,29 @@ export default function SearchAppBar({ handleOpen }) {
     setAnchorEl(null);
   }
 
+  const { items } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Open drawer"
+          <MenuIcon onClick={handleClick} />
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
           >
-            <MenuIcon onClick={handleClick} />
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              {/* <MenuItem onClick={handleClose}>Register</MenuItem> */}
-              <MenuItem onClick={() => handleOpen()(true)}>Register</MenuItem>
-              <MenuItem onClick={() => handleOpen()(false)}> Login</MenuItem>
-            </Menu>
-          </IconButton>
+            <MenuItem onClick={() => props.handleOpen()(true)}>Register</MenuItem>
+            <MenuItem onClick={() => props.handleOpen()(false)}> Login</MenuItem>
+          </Menu>
           <Typography className={classes.title} variant="h6" noWrap>
             African Market
           </Typography>
+          <div style={{ display: 'flex', margin: '1rem' }}>
+            <i className="fas fa-cart-plus fa-2x" />
+            <span style={{ marginTop: '-7px', fontSize: '20px' }}>{items}</span>
+          </div>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -118,6 +116,13 @@ export default function SearchAppBar({ handleOpen }) {
   );
 }
 
+const mapStateToProps = state => ({
+  items: state.product.items,
+});
+
+export default connect(mapStateToProps)(SearchAppBar);
+
 SearchAppBar.propTypes = {
   handleOpen: PropTypes.func.isRequired,
+  items: PropTypes.number.isRequired,
 };

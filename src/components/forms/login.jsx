@@ -44,7 +44,7 @@ const Login = (props) => {
       {loading && <Spinner />}
       { error && !login ? true : null}
       <form className={classes.container} onSubmit={e => onSubmitHandler(e)}>
-        <h2> Kindly Input Your Login Details</h2>
+        <h3>Input Login Details</h3>
         <TextField
           id="outlined-name"
           label="Username"
