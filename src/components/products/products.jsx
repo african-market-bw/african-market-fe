@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './product.css';
-import faker from 'faker';
+// import faker from 'faker';
 
-const productImg = faker.random.image();
+// const productImg = faker.random.image();
 // eslint-disable-next-line react/prop-types
 const Products = ({ product, children }) => (
   <div className="Card">
     <div className="Overlay">
       {children}
     </div>
-    <img src={productImg} alt="images" loading="eager" />
+    {/* <img src={productImg} alt="images" loading="eager" /> */}
+    <img src={product.pictureURL} alt="images" loading="eager" />
     <h2>{product.name}</h2>
     <div className="Container">
       <div className="Container-left">
@@ -41,6 +42,7 @@ export default Products;
 Products.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    pictureURL: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,

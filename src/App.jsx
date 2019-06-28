@@ -1,19 +1,23 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import HomePage from './container/homepage';
 import UserPage from './container/userProfile';
 import PrivateRoute from './HOC/privateRoute';
+import ErrorPage from './components/errorPage';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Route exact path="/" component={HomePage} />
-        <PrivateRoute exact path="/users" component={UserPage} />
-        <ToastContainer />
+        {/* <Switch> */}
+          <Route exact path="/" component={HomePage} />
+          <PrivateRoute exact path="/users" component={UserPage} />
+          <ToastContainer />
+          {/* <Route path="*" component={ErrorPage} /> */}
+        {/* </Switch> */}
       </Router>
     </div>
   );
