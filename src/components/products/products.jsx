@@ -6,7 +6,8 @@ const Products = ({ product, children }) => (
   <div className="Card">
     <div className="Overlay">
       {children}
-    </div>
+    </div> 
+    {/* {console.log(product.pictureURL)} */}
     <img src={product.pictureURL} alt="images" loading="eager" />
     <h2>{product.name}</h2>
     <div className="Container">

@@ -105,6 +105,7 @@ export const updateProduct = (id, product) => async (dispatch) => {
   try {
     const response = await axoisAuth().put(`/products/${id}`, product);
     dispatch(update(response.data));
+    console.log(response.data);
   } catch (err) {
     dispatch(error(err.message));
   } finally {
@@ -116,6 +117,7 @@ export const deleteAProduct = id => async (dispatch) => {
   dispatch(loading(true));
   try {
     const response = await axoisAuth().delete(`/products/${id}`);
+    console.log(response.data);
     dispatch(deleteProduct(response.data));
   } catch (err) {
     dispatch(error(err.message));

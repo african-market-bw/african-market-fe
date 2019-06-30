@@ -34,10 +34,12 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
+        update: '',
       };
     case actions.ADD_PRODUCTS:
       return {
         ...state,
+        products: state.products.concat(action.payload),
         error: '',
         addMessage: 'item added succesfully',
       };
@@ -50,6 +52,7 @@ const productReducer = (state = initialState, action) => {
     case actions.UPDATE_PRODUCTS:
       return {
         ...state,
+        products: product(),
         error: '',
         addMessage: 'item updated succesfully',
       };

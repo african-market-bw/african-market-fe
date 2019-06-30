@@ -58,19 +58,25 @@ const ProductForm = (props) => {
   };
   let btnName = 'Add';
   const { update } = props;
-
+  let updates = {
+    name: '', description: '', location: '', price: '',
+  };
   if (id && !update) {
-    btnName = 'Update';
     props.getAproduct(id);
+  }
+
+  if (id && update) {
+    btnName = 'Update';
+    updates = { ...update };
   }
   return (
     <Div>
       <form onSubmit={e => onSubmit(e)}>
-        <input type="text" placeholder="name" ref={nameRef} name="name" defaultValue={update.name} />
-        <input type="text" placeholder="description" ref={description} defaultValue={update.description} />
+        <input type="text" placeholder="name" ref={nameRef} name="name" defaultValue={updates.name} />
+        <input type="text" placeholder="description" ref={description} defaultValue={updates.description} />
         <input type="file" placeholder="image" onChange={e => cloudinaryImageUploader(e)} />
-        <input type="text" placeholder="location" ref={location} defaultValue={update.location} />
-        <input type="text" placeholder="price" ref={priceRef} defaultValue={update.price} />
+        <input type="text" placeholder="location" ref={location} defaultValue={updates.location} />
+        <input type="text" placeholder="price" ref={priceRef} defaultValue={updates.price} />
         <button type="submit">{btnName}</button>
       </form>
     </Div>
